@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load data
+data = pd.read_csv('customer_churn (1).csv')
+
+# Standardize column names
+data.columns = data.columns.str.strip().str.lower()
+
+# Select only numeric columns for correlation matrix
+numeric_data = data.select_dtypes(include=[np.number])
+
+# Plot correlation matrix
+plt.figure(figsize=(10, 8))
+sns.heatmap(numeric_data.corr(), annot=True, cmap='coolwarm')
+plt.show()
+
+# Alternatively, if you want to use one-hot encoding:
+# Convert categorical columns to numerical using one-hot encoding
+data_encoded = pd.get_dummies(data, drop_first=True)
+
+# Plot the correlation matrix after encoding
+plt.figure(figsize=(10, 8))
+sns.heatmap(data_encoded.corr(), annot=True, cmap='coolwarm')
+plt.show()
